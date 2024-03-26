@@ -122,6 +122,14 @@
 </head>
 <body>
 
+<script type="text/javascript"> // Password Protection
+  const password = "Amazon";
+  const userPassword = prompt("Please enter the password:");
+
+  if(userPassword !== password) {
+    document.body.innerHTML = '<h1>Access Denied</h1>';
+  }
+</script>
   <a href="https://arcg.is/0ufPv9" target="_blank" class="addRecordBtn">Add Record</a>
 
   <div id="viewDiv"></div>
