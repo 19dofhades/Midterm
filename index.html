@@ -80,10 +80,26 @@
           "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Siekopai_WFL1/FeatureServer/3"
         ];
 
+        // Create an array to store promises for each layer
+        const layerPromises = [];
+
         // Create a FeatureLayer for each layer and add it to the map
         layerUrls.forEach(url => {
           const layer = new FeatureLayer({ url });
           map.add(layer);
+          // Listen for the layerview-create event to ensure the layer is fully loaded
+          layerPromises.push(view.whenLayerView(layer));
+        });
+
+        // Wait for all layer views to be created before creating the legend
+        Promise.all(layerPromises).then(() => {
+          // Create a new Legend
+          const legend = new Legend({
+            view: view
+          });
+
+          // Add the legend to the bottom right of the view
+          view.ui.add(legend, "bottom-right");
         });
 
         // Add the locate widget to the top left corner of the view
@@ -99,15 +115,6 @@
         view.ui.add(searchWidget, {
           position: "top-right"
         });
-
-        // Create a new Legend
-        const legend = new Legend({
-          view: view,
-          layerInfos: layerUrls.map(url => ({ layer: new FeatureLayer({ url }) }))
-        });
-
-        // Add the legend to the bottom right of the view
-        view.ui.add(legend, "bottom-right");
 
       });
     });
