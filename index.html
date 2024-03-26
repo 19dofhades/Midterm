@@ -99,6 +99,18 @@ layerUrls.forEach(url => {
           position: "top-right"
         });
 
+// Import the Legend class
+const Legend = require("esri/widgets/Legend");
+
+// Create a new Legend
+const legend = new Legend({
+  view: view,
+  layerInfos: layerUrls.map(url => ({ layer: new FeatureLayer({ url }) }))
+});
+
+// Add the legend to the bottom right of the view
+view.ui.add(legend, "bottom-right");
+
       });
     });
   </script>
