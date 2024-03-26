@@ -110,7 +110,17 @@
         const searchWidget = new Search({
           view: view
         });
+        
+// Import the LayerList class
+const LayerList = require("esri/widgets/LayerList");
 
+// Create a new LayerList
+const layerList = new LayerList({
+  view: view
+});
+
+// Add the layer list to the top right of the view
+view.ui.add(layerList, "top-right");
         // Add the search widget to the bottom right of the view
         view.ui.add(searchWidget, {
           position: "bottom-right"
