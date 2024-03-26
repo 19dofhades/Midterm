@@ -71,14 +71,19 @@
           position: "top-left"
         });
 
-        // Create featurelayer from feature services
-const newLayer = new FeatureLayer({
-  // URL to the service
-  url: "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Siekopai_WFL1/FeatureServer"
-});
+        // Define the URLs for each layer in the feature service
+const layerUrls = [
+  "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Siekopai_WFL1/FeatureServer/0",
+  "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Siekopai_WFL1/FeatureServer/1",
+  "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Siekopai_WFL1/FeatureServer/2",
+  "https://services.arcgis.com/LBbVDC0hKPAnLRpO/arcgis/rest/services/Siekopai_WFL1/FeatureServer/3"
+];
 
-// Adding newLayer to the map
-map.add(newLayer);
+// Create a FeatureLayer for each layer and add it to the map
+layerUrls.forEach(url => {
+  const layer = new FeatureLayer({ url });
+  map.add(layer);
+});
 
         // Add the locate widget to the top left corner of the view
         view.ui.add(locateBtn, {
