@@ -100,10 +100,26 @@
         // Create an array to store promises for each layer
         const layerPromises = [];
 
-        // Create a PopupTemplate
-        const popupTemplate = new PopupTemplate({
-          title: "{OBJECTID}", // Use the OBJECTID field from the feature data
-          content: "{Comunidad}" // Use the Comunidad field from the feature data
+        // Define the popup template
+        let popupTemplate = new PopupTemplate({
+          title: "{Comunidad}", // Use the Comunidad field from the feature data
+          content: function(feature) {
+            const attributes = feature.graphic.attributes;
+            const layerUrl = feature.layer.url;
+            let description = "";
+
+            if (layerUrl === layerUrls[0]) {
+              description = attributes.Hunting; // Use the 'Hunting' column for the description
+            } else if (layerUrl === layerUrls[1]) {
+              description = attributes.Fishing; // Use the 'Fishing' column for the description
+            } else if (layerUrl === layerUrls[2]) {
+              description = attributes.Gathering; // Use the 'Gathering' column for the description
+            } else {
+              description = "Default description";
+            }
+
+            return description;
+          }
         });
 
         // Create a FeatureLayer for each layer and add it to the map
