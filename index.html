@@ -31,6 +31,16 @@
     .addRecordBtn:hover {
       background-color: #005a87;
     }
+    
+    /* CSS for screens that are less than 600 pixels wide */
+    @media (max-width: 600px) {
+      .esri-ui-top-right {
+        /* Change the position of the LayerList to the bottom right for small screens */
+        top: auto;
+        bottom: 10px;
+        right: 10px;
+      }
+    }
   </style>
 
   <!-- importing the css and libraries for esri.js -->
