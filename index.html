@@ -31,7 +31,7 @@
     .addRecordBtn:hover {
       background-color: #005a87;
     }
-    
+
     /* CSS for screens that are less than 600 pixels wide */
     @media (max-width: 600px) {
       .esri-ui-top-right {
@@ -39,6 +39,11 @@
         top: auto;
         bottom: 10px;
         right: 10px;
+      .esri-legend__layer {
+        /* Reduce the size of the legend items for small screens */
+        font-size: 0.8em;
+        padding: 5px;
+      }
       }
     }
   </style>
