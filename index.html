@@ -101,19 +101,20 @@
         const layerPromises = [];
 
         // Define the popup template for each layer
-        const popupTemplate = [
+        const popupTemplates = [
           new PopupTemplate({ 
-        title: "{Comunidad}",
-          content: "{Hunting}"
-        }),
-        new PopupTemplate({
-    title: "{Comunidad}", // Use the Comunidad field from the feature data
-    content: "{Fishing}" // Use the Fishing field from the feature data
-  }),
-  new PopupTemplate({
-    title: "{Comunidad}", // Use the Comunidad field from the feature data
-    content: "{Gathering}" // Use the Fishing field from the feature data
-  }),
+            title: "{Comunidad}",
+            content: "{Hunting}"
+          }),
+          new PopupTemplate({
+            title: "{Comunidad}",
+            content: "{Fishing}"
+          }),
+          new PopupTemplate({
+            title: "{Comunidad}",
+            content: "{Gathering}"
+          })
+        ];
 
         // Create a FeatureLayer for each layer and add it to the map
         layerUrls.forEach((url, index) => {
@@ -124,7 +125,7 @@
           map.add(layer);
           // Listen for the layerview-create event to ensure the layer is fully loaded
           layerPromises.push(view.whenLayerView(layer));
-        }),
+        });
 
         // Wait for all layer views to be created before creating the legend
         Promise.all(layerPromises).then(() => {
@@ -135,42 +136,8 @@
 
           // Add the legend to the bottom left of the view
           view.ui.add(legend, "bottom-left");
-        }),
+        });
 
         // Create a new LayerList
         const layerList = new LayerList({
-          view: view
-        });
-
-        // Add the layer list to the top right of the view
-        view.ui.add(layerList, "top-right");
-
-        const searchWidget = new Search({
-          view: view
-        });
-
-        // Add the search widget to the bottom right of the view
-        view.ui.add(searchWidget, {
-          position: "bottom-right"
-        });
-
-      });
-    });
-  </script>
-</head>
-<body>
-
-<script type="text/javascript"> // Password Protection
-  const password = "Amazon";
-  const userPassword = prompt("Due to research privacy reasons, this page is locked. Please enter the password:");
-
-  if(userPassword !== password) {
-    document.body.innerHTML = '<h1>Access Denied</h1>';
-  }
-</script>
-  <a href="https://arcg.is/0ufPv9" target="_blank" class="addRecordBtn">Add Record</a>
-
-  <div id="viewDiv"></div>
-  
-</body>
-</html>
+        })
