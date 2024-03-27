@@ -135,18 +135,20 @@ const PopupTemplate = require("esri/PopupTemplate");
 
 // Define the popup template
 const popupTemplate = new PopupTemplate({
-  title: "{Name}", // Use the Name field from the feature data
-  content: "{Comunidad}" // Use the Description field from the feature data
-});
+    title: "{OBJECTID}", // Use the Name field from the feature data
+    content: "{Comunidad}" // Use the Description field from the feature data
+  });
 
-// Create the FeatureLayer
-const layer = new FeatureLayer({
-  url: url,
-  popupTemplate: popupTemplate // Add the popup template to the layer
-});
-
-// Add the layer to the map
-map.add(layer);
+  // Create a FeatureLayer for each layer and add it to the map
+  layerUrls.forEach(url => {
+    const layer = new FeatureLayer({
+      url: url,
+      popupTemplate: popupTemplate // Add the popup template to the layer
+    });
+    map.add(layer);
+    // Listen for the layerview-create event to ensure the layer is fully loaded
+    layerPromises.push(view.whenLayerView(layer));
+  });
 
 
 // Import the LayerList class
