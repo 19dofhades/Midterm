@@ -33,19 +33,19 @@
     }
 
     /* CSS for screens that are less than 600 pixels wide */
-@media (max-width: 600px) {
-  .esri-ui-top-right {
-    /* Change the position of the LayerList to the bottom right for small screens */
-    top: auto;
-    bottom: 10px;
-    right: 10px;
-  }
-  .esri-legend__layer {
-    /* Reduce the size of the legend items for small screens */
-    font-size: 0.8em;
-    padding: 5px;
-  }
-}
+    @media (max-width: 600px) {
+      .esri-ui-top-right {
+        /* Change the position of the LayerList to the bottom right for small screens */
+        top: auto;
+        bottom: 10px;
+        right: 10px;
+      }
+      .esri-legend__layer {
+        /* Reduce the size of the legend items for small screens */
+        font-size: 0.8em;
+        padding: 5px;
+      }
+    }
   </style>
 
   <!-- importing the css and libraries for esri.js -->
@@ -62,8 +62,9 @@
         "esri/widgets/Search",
         "esri/layers/FeatureLayer",
         "esri/widgets/Legend",
-        "esri/widgets/LayerList"
-      ], (Map, MapView, esriConfig, Locate, Search, FeatureLayer, Legend) => {
+        "esri/widgets/LayerList",
+        "esri/PopupTemplate"
+      ], (Map, MapView, esriConfig, Locate, Search, FeatureLayer, Legend, LayerList, PopupTemplate) => {
 
         // Adding in API Key
         esriConfig.apiKey = "AAPKd03d2b0786ed4b72aa540fbc9cbaa258Qe0F34wevIz2pDoQAxSWMS7CWVypkKFS5BegW2yneQnQDEuJiLMpEmVh4pVD99Ko"
@@ -116,6 +117,8 @@
 
           // Add the legend to the bottom left of the view
           view.ui.add(legend, "bottom-left");
+       
+
         });
 
         // Add the locate widget to the top left corner of the view
