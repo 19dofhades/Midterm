@@ -46,7 +46,8 @@
         "esri/widgets/Locate",
         "esri/widgets/Search",
         "esri/layers/FeatureLayer",
-        "esri/widgets/Legend"
+        "esri/widgets/Legend",
+        "esri/widgets/LayerList"
       ], (Map, MapView, esriConfig, Locate, Search, FeatureLayer, Legend) => {
 
         // Adding in API Key
@@ -110,7 +111,7 @@
         const searchWidget = new Search({
           view: view
         });
-        
+
 // Import the LayerList class
 const LayerList = require("esri/widgets/LayerList");
 
