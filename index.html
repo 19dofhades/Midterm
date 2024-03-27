@@ -100,38 +100,31 @@
         // Create an array to store promises for each layer
         const layerPromises = [];
 
-        // Define the popup template
-        let popupTemplate = new PopupTemplate({
-          title: "{Comunidad}", // Use the Comunidad field from the feature data
-          content: function(feature) {
-            const attributes = feature.graphic.attributes;
-            const layerUrl = feature.layer.url;
-            let description = "";
-
-            if (layerUrl === layerUrls[0]) {
-              description = attributes.Hunting; // Use the 'Hunting' column for the description
-            } else if (layerUrl === layerUrls[1]) {
-              description = attributes.Fishing; // Use the 'Fishing' column for the description
-            } else if (layerUrl === layerUrls[2]) {
-              description = attributes.Gathering; // Use the 'Gathering' column for the description
-            } else {
-              description = "Default description";
-            }
-
-            return description;
-          }
-        });
+        // Define the popup template for each layer
+        const popupTemplate = [
+          new PopupTemplate({ 
+        title: "{Comunidad}",
+          content: "{Hunting}"
+        }),
+        new PopupTemplate({
+    title: "{Comunidad}", // Use the Comunidad field from the feature data
+    content: "{Fishing}" // Use the Fishing field from the feature data
+  }),
+  new PopupTemplate({
+    title: "{Comunidad}", // Use the Comunidad field from the feature data
+    content: "{Gathering}" // Use the Fishing field from the feature data
+  }),
 
         // Create a FeatureLayer for each layer and add it to the map
-        layerUrls.forEach(url => {
+        layerUrls.forEach((url, index) => {
           const layer = new FeatureLayer({
             url: url,
-            popupTemplate: popupTemplate
+            popupTemplate: popupTemplates[index] // Add the corresponding popup template to the layer
           });
           map.add(layer);
           // Listen for the layerview-create event to ensure the layer is fully loaded
           layerPromises.push(view.whenLayerView(layer));
-        });
+        }),
 
         // Wait for all layer views to be created before creating the legend
         Promise.all(layerPromises).then(() => {
@@ -142,7 +135,7 @@
 
           // Add the legend to the bottom left of the view
           view.ui.add(legend, "bottom-left");
-        });
+        }),
 
         // Create a new LayerList
         const layerList = new LayerList({
