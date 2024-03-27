@@ -100,9 +100,18 @@
         // Create an array to store promises for each layer
         const layerPromises = [];
 
+        // Create a PopupTemplate
+        const popupTemplate = new PopupTemplate({
+          title: "{OBJECTID}", // Use the OBJECTID field from the feature data
+          content: "{Comunidad}" // Use the Comunidad field from the feature data
+        });
+
         // Create a FeatureLayer for each layer and add it to the map
         layerUrls.forEach(url => {
-          const layer = new FeatureLayer({ url });
+          const layer = new FeatureLayer({
+            url: url,
+            popupTemplate: popupTemplate
+          });
           map.add(layer);
           // Listen for the layerview-create event to ensure the layer is fully loaded
           layerPromises.push(view.whenLayerView(layer));
@@ -117,50 +126,20 @@
 
           // Add the legend to the bottom left of the view
           view.ui.add(legend, "bottom-left");
-       
-
         });
 
-        // Add the locate widget to the top left corner of the view
-        view.ui.add(locateBtn, {
-          position: "top-left"
+        // Create a new LayerList
+        const layerList = new LayerList({
+          view: view
         });
+
+        // Add the layer list to the top right of the view
+        view.ui.add(layerList, "top-right");
 
         const searchWidget = new Search({
           view: view
         });
 
-// Import the PopupTemplate class
-const PopupTemplate = require("esri/PopupTemplate");
-
-// Define the popup template
-const popupTemplate = new PopupTemplate({
-    title: "{OBJECTID}", // Use the Name field from the feature data
-    content: "{Comunidad}" // Use the Description field from the feature data
-  });
-
-  // Create a FeatureLayer for each layer and add it to the map
-  layerUrls.forEach(url => {
-    const layer = new FeatureLayer({
-      url: url,
-      popupTemplate: popupTemplate // Add the popup template to the layer
-    });
-    map.add(layer);
-    // Listen for the layerview-create event to ensure the layer is fully loaded
-    layerPromises.push(view.whenLayerView(layer));
-  });
-
-
-// Import the LayerList class
-const LayerList = require("esri/widgets/LayerList");
-
-// Create a new LayerList
-const layerList = new LayerList({
-  view: view
-});
-
-// Add the layer list to the top right of the view
-view.ui.add(layerList, "top-right");
         // Add the search widget to the bottom right of the view
         view.ui.add(searchWidget, {
           position: "bottom-right"
