@@ -124,8 +124,11 @@
           });
           map.add(layer);
           // Listen for the layerview-create event to ensure the layer is fully loaded
-          layerPromises.push(view.whenLayerView(layer));
-        });
+          layerPromises.push(view.whenLayerView(layer).then((layerView) => {
+            // Log the fields of the layer to the console
+    console.log(layerView.layer.fields);
+  }));
+});
 
         // Wait for all layer views to be created before creating the legend
         Promise.all(layerPromises).then(() => {
