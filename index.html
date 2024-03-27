@@ -112,6 +112,25 @@
           view: view
         });
 
+// Import the PopupTemplate class
+const PopupTemplate = require("esri/PopupTemplate");
+
+// Define the popup template
+const popupTemplate = new PopupTemplate({
+  title: "{Name}", // Use the Name field from the feature data
+  content: "{Comunidad}" // Use the Description field from the feature data
+});
+
+// Create the FeatureLayer
+const layer = new FeatureLayer({
+  url: url,
+  popupTemplate: popupTemplate // Add the popup template to the layer
+});
+
+// Add the layer to the map
+map.add(layer);
+
+
 // Import the LayerList class
 const LayerList = require("esri/widgets/LayerList");
 
