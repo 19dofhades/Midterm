@@ -116,16 +116,15 @@
           })
         ];
 
-        // Create a FeatureLayer for each layer and add it to the map
         layerUrls.forEach((url, index) => {
-          const layer = new FeatureLayer({
-            url: url,
-            popupTemplate: popupTemplates[index] // Add the corresponding popup template to the layer
-          });
-          map.add(layer);
-          // Listen for the layerview-create event to ensure the layer is fully loaded
-          layerPromises.push(view.whenLayerView(layer).then((layerView) => {
-            // Log the fields of the layer to the console
+  const layer = new FeatureLayer({
+    url: url,
+    popupTemplate: popupTemplates[index] // Add the corresponding popup template to the layer
+  });
+  map.add(layer);
+  // Listen for the layerview-create event to ensure the layer is fully loaded
+  layerPromises.push(view.whenLayerView(layer).then((layerView) => {
+    // Log the fields of the layer to the console
     console.log(layerView.layer.fields);
   }));
 });
